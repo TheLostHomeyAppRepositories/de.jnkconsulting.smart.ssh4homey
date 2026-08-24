@@ -28,5 +28,8 @@
   },
   "1.2.4": {
     "en": "Fixed SSH auth-tag crash handling during connect."
+  },
+  "1.2.5": {
+    "en": "Fixed SSH connection status to reflect server reachability instead of command exit failures."
   }
 }
