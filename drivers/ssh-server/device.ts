@@ -43,7 +43,7 @@ class SSHServerDevice extends Homey.Device {
                   });
                   device.error("Sync command failed (non-zero exit): " + args.command + ' - ' + errorMessage)
                   device.triggerGlobalError(args.command, errorMessage);
-                  await device.updateConnectionRelatedCapabilities(false);
+                  await device.updateConnectionRelatedCapabilities(true);
                   reject(new Error(errorMessage))
                   return;
                 }
@@ -70,7 +70,6 @@ class SSHServerDevice extends Homey.Device {
               .catch(async e => {
                 device.error("Sync command failed: " + args.command, e)
                 device.triggerGlobalError(args.command, device.normalizeErrorMessage(e));
-                await device.updateConnectionRelatedCapabilities(false);
                 reject(e)
               })
         })
@@ -91,8 +90,8 @@ class SSHServerDevice extends Homey.Device {
                     stderr: result.stderr || ''
                   });
                   device.error("Async command failed (non-zero exit): " + args.command + ' - ' + errorMessage)
-                  device.updateConnectionRelatedCapabilities(false)
-                      .catch(e => device.error('Failed to update capabilities after async command failure', e));
+                  device.updateConnectionRelatedCapabilities(true)
+                      .catch(e => device.error('Failed to update capabilities after successful SSH connection', e));
                   device.triggerGlobalError(args.command, errorMessage);
                   const response = {
                     command: args.command,
@@ -135,8 +134,6 @@ class SSHServerDevice extends Homey.Device {
             })
             .catch(e => {
               device.error("Async command failed: " + args.command, e);
-              device.updateConnectionRelatedCapabilities(false)
-                  .catch(e => device.error('Failed to update capabilities after async command error', e));
               const errorMessage = device.normalizeErrorMessage(e);
               const response = {
                 command: args.command,

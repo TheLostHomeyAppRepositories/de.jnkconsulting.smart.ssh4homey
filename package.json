@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "app.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "npm run build && node --test tests/*.test.js"
   },
   "devDependencies": {
     "@tsconfig/node12": "^12.1.7",
